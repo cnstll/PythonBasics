@@ -52,53 +52,105 @@ def print_dictionnary_details():
 
 
 def print_recipe(recipe_name):
-  if recipe_name in cookbook:
-    print(f"Recipe for {recipe_name}:")
+    print(f"\nRecipe for {recipe_name}:")
     recipe = cookbook[recipe_name]
     print(f"Ingredients list: {recipe['ingredients']}.")
     print(f"To be eaten for {recipe['meal']}.")
     print(f"Takes {recipe['prep_time']} minutes to cook.")
-    print()
-  else:
-    print(f"Recipe '{recipe_name}' not found :(\n")
 
 
-def del_from_cookbook(recipe_name):
+def print_from_cookbook():
+  recipe_name = input("\nEnter the name of the recipe you want to look up: \n>> ")
   if recipe_name in cookbook:
-    print(f"Deleting '{recipe_name}' recipe...")
-    cookbook.pop(recipe_name)
-    print("Done.")
-    print()
+    print_recipe(recipe_name)
+  elif not recipe_name:
+    print("No recipe name entered...")
   else:
     print(f"Recipe '{recipe_name}' not found :(\n")
 
 
-def add_to_cookbook(recipe_name, ingredients, meal, prep_time):
+def del_recipe(recipe_name):
+    cookbook.pop(recipe_name)
+
+
+def del_from_cookbook():
+  recipe_name = input("\nEnter the name of the recipe you want to delete: \n>> ")
+  if recipe_name in cookbook:
+    del_recipe(recipe_name)
+    print("Recipe succesfully deleted.")
+  elif not recipe_name:
+    print("No recipe name entered...")
+  else:
+    print(f"Recipe '{recipe_name}' not found :(\n")
+
+
+def add_recipe(recipe_name, ingredients, meal, prep_time):
+  recipe_details = {}
+  recipe_details.setdefault('ingredients', ingredients)
+  recipe_details.setdefault('meal', meal)
+  recipe_details.setdefault('prep_time', prep_time)
+  cookbook.setdefault(recipe_name, recipe_details)
+
+
+def add_to_cookbook():
+  recipe_name = input("\nEnter the name of the recipe you want to add: \n>>  ")
   if recipe_name in cookbook:
     print(f"Recipe '{recipe_name}' already saved in cookbook\n")
-    print()
+  elif not recipe_name:
+    print("No recipe name entered...")
   else:
-    print(f"Adding '{recipe_name}' to cookbook...\n")
-    recipe_details = {}
-    recipe_details.setdefault('ingredients', ingredients)
-    recipe_details.setdefault('meal', meal)
-    recipe_details.setdefault('prep_time', prep_time)
-    cookbook.setdefault(recipe_name, recipe_details)
-    print("Done.")
+    print(f"\nFill in the details for '{recipe_name}' recipe")
+    ingredients = input("Ingredients (list): ")
+    meal = input("Meal: ")
+    prep_time = input("Preparation time: ")
+    add_recipe(recipe_name, ingredients, meal, prep_time)
+    print("Recipe succesfully added.")
 
 
+def print_functionalities():
+  print("Please select an option by typing the corresponding number:")
+  print("1: Add a recipe")
+  print("2: Delete a recipe")
+  print("3: Print a recipe")
+  print("4: Print the cookbook")
+  print("5: Quit")
 
-print()
-print_keys()
-print()
-print_values()
-print()
-print_dictionnary_details()
-print()
-print_recipe("salad")
-print_recipe("burgers")
-del_from_cookbook("salad")
-print_dictionnary_details()
-add_to_cookbook("pasta", ["pasta", "oil"], "lunch", 10)
-print_dictionnary_details()
-print_dictionnary()
+
+def check_input(input):
+  valid_inputs = [str(x) for x in range(1,6)] # comprehension list
+  if input in valid_inputs:
+    return True
+  else:
+    return False
+
+
+def print_input_error():
+  print("\nThis option does not exist, please type the corresponding number.")
+  print("To exit, enter 5.")
+
+
+def quit():
+  print('\nCookbook closing...\nBye.\n')
+  exit(0)
+
+
+def execute_functionality(selection):
+  functionalities[selection]()
+
+
+functionalities = {
+  '1': add_to_cookbook,
+  '2': del_from_cookbook,
+  '3': print_from_cookbook,
+  '4': print_dictionnary,
+  '5': quit
+}
+
+while (1):
+  print_functionalities()
+  selection = input(">> ")
+  if check_input(selection):
+    execute_functionality(selection)
+  else:
+    print_input_error()
+  print()
