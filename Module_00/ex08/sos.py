@@ -1,10 +1,9 @@
 import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import sys
 import re
 import pygame
 import time
-
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 
 gmorse_table = {'A': '.-', 'B': '-...', 'C': '-.-.',
@@ -35,6 +34,7 @@ def convert_to_morse(string):
             res += " / "
     return res
 
+
 # The all() function returns True if all items
 # in an iterable are true, otherwise it returns False
 def check_args():
@@ -53,8 +53,6 @@ def make_morse_sing(morse_str):
     morse_unit = 0.3
     morse_list = morse_str.split(" ")
     pygame.init()
-    #pygame.mixer.init()
-    # beep = pygame.mixer.Sound("beep.wav")
     for code in morse_list:
         for c in code:
             if c is '.':
@@ -80,5 +78,5 @@ for i in range(1, nbr_of_args):
         morse_str += ' / '
 
 
-#make_morse_sing(morse_str)
+# make_morse_sing(morse_str)
 print(morse_str)
