@@ -6,6 +6,7 @@ import pygame
 import time
 
 
+
 gmorse_table = {'A': '.-', 'B': '-...', 'C': '-.-.',
                 'D': '-..', 'E': '.', 'F': '..-.',
                 'G': '--.', 'H': '....', 'I': '..',
@@ -26,8 +27,8 @@ def convert_to_morse(string):
     res = ""
     word_list = re.sub(r'[^\w]', ' ',  string).split()
     for string in word_list:
-        for c in string:
-            if c is not string[:1]:
+        for count, c in enumerate(string):
+            if count != 0:
                 res += ' '
             res += gmorse_table.get(c.upper())
         if string is not word_list[-1]:
@@ -49,13 +50,25 @@ def check_args():
 
 
 def make_morse_sing(morse_str):
+    morse_unit = 0.3
+    morse_list = morse_str.split(" ")
     pygame.init()
+    #pygame.mixer.init()
     # beep = pygame.mixer.Sound("beep.wav")
-    pygame.mixer.music.load("beep.wav")
-    for c in morse_str:
-        if (c is '.'):
-            pygame.mixer.music.play()
-            time.sleep(2)
+    for code in morse_list:
+        for c in code:
+            if c is '.':
+                pygame.mixer.music.load("dot.ogg")
+                pygame.mixer.music.play()
+
+            elif c is '-':
+                pygame.mixer.music.load("dah.ogg")
+                pygame.mixer.music.play()
+            else:
+                time.sleep(morse_unit * 7)
+                continue
+            time.sleep(morse_unit * 1)
+        time.sleep(morse_unit * 3)
 
 
 check_args()
@@ -67,5 +80,5 @@ for i in range(1, nbr_of_args):
         morse_str += ' / '
 
 
-make_morse_sing(morse_str)
-#print(morse_str)
+#make_morse_sing(morse_str)
+print(morse_str)
