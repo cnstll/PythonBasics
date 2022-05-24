@@ -80,6 +80,14 @@ class TestRecipeOutput(unittest.TestCase):
         expected += " ['cucumber', 'tomatoes', 'feta', 'olives'] to complete it.\n"
         expected += "This dish is usually served as lunch.\n"
         self.assertEqual(str_out, expected)
+    
+    def test_str_builtin_other_type_of_call(self):
+        salad = recipe.Recipe("salad", 1, 10, ["cucumber", "tomatoes", "feta", "olives"], "", "lunch")
+        str_out = str(salad)
+        expected = "salad is a level 1 recipe.\nYou will need 10 mins and these ingredients"
+        expected += " ['cucumber', 'tomatoes', 'feta', 'olives'] to complete it.\n"
+        expected += "This dish is usually served as lunch.\n"
+        self.assertEqual(str_out, expected)
 
 # Cmd entrypoint for unittest
 if __name__ == '__main__':
