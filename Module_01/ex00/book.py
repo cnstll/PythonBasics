@@ -1,13 +1,18 @@
+import datetime
 class Book:
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
 
     # Need to hanlde type checking
-    def __init__(self, name, last_update, creation_date, recipes_list):
+    def __init__(self, name):
+        if not isinstance(name, str):
+            raise TypeError(f'"name" must be a string')
+        if not name:
+            raise ValueError(f'"name" cannot be empty')
         self.name = name
-        self.last_update = last_update
-        self.creation_date = creation_date
-        self.recipes_list = recipes_list
+        self.last_update = datetime.datetime.now()
+        self.creation_date = datetime.datetime.now()
+        self.recipes_list = {"starter": [], "lunch": [], "dessert": []}
 
 
     def get_recipe_by_name(self, name):
