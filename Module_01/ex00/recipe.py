@@ -4,13 +4,13 @@ class Recipe:
         return super().__new__(cls)
 
     # Need to hanlde type checking
-    def __init__(self, name, cooking_lvl, cooking_time, ingredients, description, recipe_type):
+    def __init__(self, name, lvl, time, ingredients, description, type):
         self.name = name
-        self.cooking_lvl = cooking_lvl
-        self.cooking_time = cooking_time
+        self.cooking_lvl = lvl
+        self.cooking_time = time
         self.ingredients = ingredients
         self.description = description
-        self.recipe_type = recipe_type
+        self.recipe_type = type
 
     @property
     def name(self):
@@ -39,7 +39,7 @@ class Recipe:
                 raise ValueError('"cooking_lvl" should be between 1 and 5')
         else:
             raise TypeError('"cooking_lvl" must be an int')
-    
+
     @property
     def cooking_time(self):
         return self._cooking_time
@@ -53,12 +53,10 @@ class Recipe:
                 raise ValueError('"cooking_time" should be positive')
         else:
             raise TypeError('"cooking_time" must be an int')
-    
-    
+
     @property
     def ingredients(self):
         return self._ingredients
-
 
     @ingredients.setter
     def ingredients(self, ingredients):
@@ -77,7 +75,6 @@ class Recipe:
     def description(self):
         return self._description
 
-
     @description.setter
     def description(self, description):
         if isinstance(description, str):
@@ -89,7 +86,6 @@ class Recipe:
     def recipe_type(self):
         return self._recipe_type
 
-
     @recipe_type.setter
     def recipe_type(self, recipe_type):
         if isinstance(recipe_type, str):
@@ -98,11 +94,11 @@ class Recipe:
             if recipe_type in ["starter", "lunch", "dessert"]:
                 self._recipe_type = recipe_type
             else:
-                raise ValueError('"recipe_type" must be "starter", "lunch" or "dessert"')
+                raise ValueError(
+                    '"type" must be in ["starter", "lunch", "dessert"]')
         else:
             raise TypeError('"recipe_type" must be a string')
 
-    
     def __str__(self):
         """Return the string to print with the recipe info"""
         txt = f"{self.name} is a level {self.cooking_lvl} recipe.\n"
