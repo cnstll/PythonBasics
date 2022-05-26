@@ -1,9 +1,9 @@
 import os
 import sys
 import re
-import pygame
 import time
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+import pygame
 
 
 gmorse_table = {'A': '.-', 'B': '-...', 'C': '-.-.',
@@ -25,12 +25,12 @@ gmorse_table = {'A': '.-', 'B': '-...', 'C': '-.-.',
 def convert_to_morse(string):
     res = ""
     word_list = re.sub(r'[^\w]', ' ',  string).split()
-    for string in word_list:
-        for count, c in enumerate(string):
+    for count_word, word in enumerate(word_list):
+        for count, c in enumerate(word):
             if count != 0:
                 res += ' '
             res += gmorse_table.get(c.upper())
-        if string is not word_list[-1]:
+        if count_word is not len(word_list) - 1:
             res += " / "
     return res
 
@@ -55,11 +55,10 @@ def make_morse_sing(morse_str):
     pygame.init()
     for code in morse_list:
         for c in code:
-            if c is '.':
+            if c == '.':
                 pygame.mixer.music.load("dot.ogg")
                 pygame.mixer.music.play()
-
-            elif c is '-':
+            elif c == '-':
                 pygame.mixer.music.load("dah.ogg")
                 pygame.mixer.music.play()
             else:
