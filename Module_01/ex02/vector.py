@@ -20,6 +20,9 @@ class Vector:
     def flatten_list(self, lst):
         return [item for sublist in lst for item in sublist]
 
+    def reshape_list(self, lst):
+        return [[item] for item in lst]
+    
     def is_row_vector(self):
         return self.shape[0] == 1
 
@@ -30,8 +33,15 @@ class Vector:
         return self.shape == other.shape
 
     def __add__(self, rhs):
-        if self.is_row_vector() and self.are_same_dimension(rhs):
+        if not isinstance(rhs, float) and not isinstance(rhs, Vector):
+            raise TypeError(f"Type {type(rhs)} not supported as an operand")
+        elif self.is_row_vector() and isinstance(rhs, float):
+            return [x + rhs for x in self.values]
+        elif self.is_row_vector() and self.are_same_dimension(rhs):
             return [sum(x) for x in zip(self.values, rhs.values)]
+        elif self.is_column_vector() and isinstance(rhs, float):
+            l1 = self.flatten_list(self.values)
+            return [x + rhs for x in l1]
         elif self.is_column_vector() and self.are_same_dimension(rhs):
             l1 = self.flatten_list(self.values)
             l2 = self.flatten_list(rhs.values)
@@ -42,9 +52,30 @@ class Vector:
     def __radd__(self, lhs):
         return lhs.__add__(self)
 
-# # add : only vectors of same dimensions. __sub__
-# __rsub__
-# # sub : only vectors of same dimensions. __truediv__
+    def __sub__(self, rhs):
+        if not isinstance(rhs, float) and not isinstance(rhs, Vector):
+            raise TypeError(f"Type {type(rhs)} not supported as an operand")
+        elif self.is_row_vector() and isinstance(rhs, float):
+            return [x - rhs for x in self.values]
+        elif self.is_row_vector() and self.are_same_dimension(rhs):
+            return [x[0] - x[1] for x in zip(self.values, rhs.values)]
+        elif self.is_column_vector() and isinstance(rhs, float):
+            l1 = self.flatten_list(self.values)
+            sub = [x - rhs for x in l1]
+            return self.reshape_list(sub)
+        elif self.is_column_vector() and self.are_same_dimension(rhs):
+            l1 = self.flatten_list(self.values)
+            l2 = self.flatten_list(rhs.values)
+            sub = [x[0] - x[1] for x in zip(l1, l2)]
+            return self.reshape_list(sub)
+        else:
+            raise ValueError(f"Cannot sub vectors of different shapes: {self.shape} != {rhs.shape}")
+
+    def __rsub__(self, lhs):
+        return lhs.__sub__(self)
+
+    def __truediv__(self, ):
+        pass
 # __rtruediv__
 # # div : only scalars.
 # __mul__
