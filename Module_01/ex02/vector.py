@@ -33,7 +33,7 @@ class Vector:
         return self.shape == other.shape
 
     def __add__(self, rhs):
-        if not isinstance(rhs, float) and not isinstance(rhs, Vector):
+        if not isinstance(rhs, Vector):
             raise TypeError(f"Type {type(rhs)} not supported as an operand")
         elif self.is_row_vector() and isinstance(rhs, float):
             return [x + rhs for x in self.values]
@@ -74,12 +74,37 @@ class Vector:
     def __rsub__(self, lhs):
         return lhs.__sub__(self)
 
-    def __truediv__(self, ):
-        pass
+    def __truediv__(self, rhs):
+        if not isinstance(rhs, (float,int)):
+            raise TypeError(f"Type {type(rhs)} not supported as divisor")
+        elif rhs == 0:
+            raise ValueError(f"Division by zero not supported")
+        elif self.is_column_vector():
+            l1 = self.flatten_list(self.values)
+            r1 = self.reshape_list([x / rhs for x in l1])
+            return r1
+        else:
+            return [x / rhs for x in self.values]
+    
+    def __rtruediv__(self, lhs):
+        return self.__truediv__(lhs)
 # __rtruediv__
 # # div : only scalars.
-# __mul__
-# __rmul__
-# # mul : only scalars.
-# __str__
-# __repr__
+
+    def __mul__(self, rhs):
+        if not isinstance(rhs, (float,int)):
+            raise TypeError(f"Type {type(rhs)} not supported as multiplicator")
+        elif self.is_column_vector():
+            l1 = self.flatten_list(self.values)
+            return self.reshape_list([x * rhs for x in l1])
+        else:
+            return [x * rhs for x in self.values]
+
+    def __rmul__(self, lhs):
+        return self.__mul__(lhs)
+
+    def __str__(self):
+        return f"Vector list: {self.values} and shape: {self.shape}"
+    
+    def __repr__(self):
+        return f"Vector({self.values}, {self.shape})"
