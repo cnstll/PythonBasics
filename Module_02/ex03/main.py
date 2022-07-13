@@ -1,11 +1,15 @@
 from csvreader import CsvReader
 
 if __name__ == "__main__":
-    with CsvReader('space_avocado.csv', header=True, skip_bottom=5, skip_top=2) as file:
-        print("file opened")
-        file.filename
-        print(file.getheader())
-        print(file.getheader())
+    with CsvReader('bad.csv') as file:
+        print(file)
+        if file is None:
+            print("File is corrupted")
+
+    with CsvReader('good.csv') as file:
         data = file.getdata()
-        for l in data:
-            print(l, sep='\n')
+        header = file.getheader()
+        for record in data:
+            print(record, '\n')
+        if header is None:
+            print("Please set 'header=True', if you csv as fields")
