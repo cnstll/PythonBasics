@@ -19,11 +19,11 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/guides/single-sourcing-package-version/
-    version = '1.0.0',  # Required
+    version='1.0.0',  # Required
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
-    description = 'Learning how to do packages',  # Optional
+    description='Learning how to do packages',  # Optional
     # This is an optional longer description of your project that represents
     # the body of text which users will see when they visit PyPI.
     #
@@ -43,7 +43,7 @@ setup(
     #
     # This field corresponds to the "Description-Content-Type" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#description-content-type-optional
-    # long_description_content_type="text/markdown",  # Optional (see note above)
+    # long_description_content_type="text/markdown",# Optional (see note above)
     # This should be a valid link to your project's main homepage.
     #
     # This field corresponds to the "Home-Page" metadata field:
@@ -55,7 +55,7 @@ setup(
     # This should be a valid email address corresponding to the author listed
     # above.
     author_email='calle@student.42.fr',  # Optional
-    home_page= None,
+    home_page=None,
     license='GPLv3',
     # Classifiers help users find your project by categorizing it.
     #
@@ -79,7 +79,6 @@ setup(
         # checked by 'pip install'. See instead 'python_requires' below.
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        
     ],
     # This field adds keywords for your project which will appear on the
     # project page. What does your project relate to?
@@ -123,9 +122,4 @@ setup(
     # projects.
     extras_require={  # Optional
     },
-    # If there are data files included in your packages that need to be
-    # installed, specify them here.
-    # package_data={  # Optional
-        # "sample": ["package_data.dat"],
-    # },
 )
