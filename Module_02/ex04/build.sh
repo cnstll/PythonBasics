@@ -1,8 +1,8 @@
 echo "Upgrading pip..."
 python3 -m pip install --upgrade pip
-echo "Installing setuptools..."
-pip install --upgrade setuptools
 echo "Installing build..."
-pip install --upgrade build
+python3 -m pip install --upgrade build
 echo "Building package..."
-python3 -m build
+python3 -m build --sdist --wheel
+echo "Building packages..."
+pip install ./dist/my_minipack-1.0.0-py3-none-any.whl
